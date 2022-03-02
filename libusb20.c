@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/libusb/libusb20.c 356136 2019-12-27 20:35:12Z hselasky $ */
+/* $FreeBSD$ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -607,6 +607,11 @@ libusb20_dev_close(struct libusb20_device *pdev)
 	pdev->methods = &libusb20_dummy_methods;
 
 	pdev->is_opened = 0;
+
+	/*
+	 * Make sure libusb20_tr_get_pointer() fails:
+	 */
+	pdev->nTransfer = 0;
 
 	/* 
 	 * The following variable is only used by the libusb v0.1

@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/libusb/libusb20_int.h 356136 2019-12-27 20:35:12Z hselasky $ */
+/* $FreeBSD$ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *

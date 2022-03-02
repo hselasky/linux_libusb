@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/libusb/libusb10_desc.c 326219 2017-11-26 02:00:33Z pfg $ */
+/* $FreeBSD$ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *

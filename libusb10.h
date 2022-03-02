@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/libusb/libusb10.h 349409 2019-06-26 11:28:08Z hselasky $ */
+/* $FreeBSD$ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *

@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/libusb/libusb10_hotplug.c 357298 2020-01-30 17:30:04Z hselasky $ */
+/* $FreeBSD$ */
 /*-
  * Copyright (c) 2016-2019 Hans Petter Selasky. All rights reserved.
  *

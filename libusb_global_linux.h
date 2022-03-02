@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/libusb/libusb_global_linux.h 358841 2020-03-10 15:59:20Z hselasky $ */
+/* $FreeBSD$ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -50,6 +50,7 @@
 #include <fcntl.h>
 #include <limits.h>
 #include <setjmp.h>
+#include <signal.h>
 #include <pthread.h>
 #include <sys/queue.h>
 #include <sys/ioctl.h>

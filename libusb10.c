@@ -1,4 +1,4 @@
-/* $FreeBSD: head/lib/libusb/libusb10.c 353009 2019-10-02 15:19:39Z kevans $ */
+/* $FreeBSD$ */
 /*-
  * SPDX-License-Identifier: BSD-2-Clause-FreeBSD
  *
@@ -34,6 +34,7 @@
 #include <errno.h>
 #include <poll.h>
 #include <pthread.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -225,6 +226,8 @@ libusb_init(libusb_context **context)
 		*context = ctx;
 
 	DPRINTF(ctx, LIBUSB_DEBUG_FUNCTION, "libusb_init complete");
+
+	signal(SIGPIPE, SIG_IGN);
 
 	return (0);
 }
@@ -529,6 +532,15 @@ libusb_open(libusb_device *dev, libusb_device_handle **devh)
 		libusb_unref_device(dev);
 		return (LIBUSB_ERROR_NO_MEM);
 	}
+
+	/*
+	 * Clear the device gone flag, in case the device was opened
+	 * after a re-attach, to allow new transaction:
+	 */
+	CTX_LOCK(ctx);
+	dev->device_is_gone = 0;
+	CTX_UNLOCK(ctx);
+
 	libusb10_add_pollfd(ctx, &dev->dev_poll, pdev, libusb20_dev_get_fd(pdev), POLLIN |
 	    POLLOUT | POLLRDNORM | POLLWRNORM);
 
@@ -1714,5 +1726,20 @@ libusb_error_name(int code)
 		return ("LIBUSB_ERROR_OTHER");
 	default:
 		return ("LIBUSB_ERROR_UNKNOWN");
+	}
+}
+
+int
+libusb_has_capability(uint32_t capability)
+{
+
+	switch (capability) {
+	case LIBUSB_CAP_HAS_CAPABILITY:
+	case LIBUSB_CAP_HAS_HOTPLUG:
+	case LIBUSB_CAP_HAS_HID_ACCESS:
+	case LIBUSB_CAP_SUPPORTS_DETACH_KERNEL_DRIVER:
+		return (1);
+	default:
+		return (0);
 	}
 }
